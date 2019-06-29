@@ -10,8 +10,6 @@ from torch.utils.data import DataLoader
 from dataset import Dataset
 from loss import *
 from model import *
-from model_avae import *
-from model_svae import *
 
 import pandas as pd
 
@@ -29,10 +27,7 @@ from options import Options
 
 opt = Options().parse()
 
-if opt.avae:
-    str_vae = "avae"
-else:
-    str_vae = "vae"
+str_vae = "avae"
 
 def main():
     if opt.is_train:
@@ -175,12 +170,6 @@ def test(dataset, theta):
 
         spr, pval = generate_spearmanr(custom_matr_mutant_name_list, custom_matr_delta_elbos, \
                                        mutation_file, phenotype_name)
-
-
-def train_semi_supervised(labelled, unlabelled): #we can seprate disease at the beg
-    model = M2_VAE(opt.latent_dim, seqlen,
-                              opt.alphabet_size, opt.enc_h1_dim, opt.enc_h2_dim, opt.dec_h1_dim, opt.dec_h2_dim, opt.alphabet_size, opt.query_dim, opt.interaction_inner_dim, opt.dropout_att, opt.mu_sparse, opt.logsigma_sparse, opt.cw_inner_dimension, opt.nb_patterns,
-                              opt.has_temperature, opt.has_dictionary).to(device)
 
 def train_main(dataset, theta):
     dataset_helper = DataHelper(dataset, theta)
